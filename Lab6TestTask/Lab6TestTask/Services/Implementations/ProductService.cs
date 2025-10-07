@@ -17,13 +17,8 @@ public class ProductService : IProductService
         _dbContext = dbContext;
     }
 
-    public async Task<Product> GetProductAsync()
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<Product> GetProductAsync() => _dbContext.Products.Where(pr => pr.Status == Enums.ProductStatus.Reserved).OrderByDescending(pr => pr.Price).First();
+    
 
-    public async Task<IEnumerable<Product>> GetProductsAsync()
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IEnumerable<Product>> GetProductsAsync() => _dbContext.Products.Where(p => p.Quantity > 1000 && p.ReceivedDate.Year == 2025).ToList();
 }
